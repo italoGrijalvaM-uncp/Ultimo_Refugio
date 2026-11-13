@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Último Refugio - Realidad Virtual Web</title>
+    <!-- Importar la librería A-Frame -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+
+<body>
+    <a-scene vr-mode-ui="enabled: true">
+        <!-- Luz ambiental para que la escena no se vea completamente plana -->
+        <a-light type="ambient" color="#95a5a6"></a-light>
+        <a-light type="directional" position="2 4 -2" color="#dfe6e9" intensity="0.6"></a-light>
+
+        <!-- Entorno inicial: Cielo de un bosque seco y desolado (grisáceo) -->
+        <a-sky color="#636e72"></a-sky>
+
+        <!-- Suelo marchito -->
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="50" height="50" color="#2d3436"></a-plane>
+
+        <!-- Ejemplo de un "Recuerdo" flotante (Esfera brillante) -->
+        <a-sphere position="0 2 -3" radius="0.4" color="#ffeaa7"
+            material="emissive: #fdcb6e; emissiveIntensity: 0.6"></a-sphere>
+        <a-text value="Aqui habia un rio..." position="-0.9 2.7 -3" color="#ffffff" width="4"></a-text>
+
+        <!-- Cámara del usuario optimizada para móviles y visor Cardboard -->
+        <a-camera position="0 1.6 0">
+            <a-cursor color="#ff7675"
+                animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150">
+            </a-cursor>
+        </a-camera>
+    </a-scene>
+</body>
+
+</html>
