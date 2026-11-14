@@ -21,6 +21,39 @@
         <!-- Suelo marchito -->
         <a-plane position="0 0 -4" rotation="-90 0 0" width="50" height="50" color="#2d3436"></a-plane>
 
+        <!-- ========================================== -->
+        <!-- 🌲 DEFINICIÓN DE TODOS LOS ASSETS 3D (.GLB) -->
+        <!-- ========================================== -->
+        <a-assets>
+            <a-asset-item id="arboles-muertos" src="assets/models/arboles_muertos.glb"></a-asset-item>
+            <a-asset-item id="arbustos" src="assets/models/arbustos.glb"></a-asset-item>
+            <a-asset-item id="pasto-muerto" src="assets/models/pasto_muerto.glb"></a-asset-item>
+            <a-asset-item id="pasto-seco" src="assets/models/pasto_seco.glb"></a-asset-item>
+            <a-asset-item id="roca-1" src="assets/models/roca_mediana1.glb"></a-asset-item>
+            <a-asset-item id="roca-2" src="assets/models/roca_mediana2.glb"></a-asset-item>
+            <a-asset-item id="rocas" src="assets/models/rocas.glb"></a-asset-item>
+            <a-asset-item id="valley-terrain" src="assets/models/Valley_Terrain.glb"></a-asset-item>
+            <a-asset-item id="winter-terrain" src="assets/models/winter_terrain_02.glb"></a-asset-item>
+            <a-asset-item id="fragmento-arboles" src="assets/models/fragmento_arboles.glb"></a-asset-item>
+            <a-asset-item id="grass-platform" src="assets/models/Grass_Platform.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Terreno y plataformas base -->
+        <a-gltf-model src="#valley-terrain" position="0 0 0" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#grass-platform" position="0 0 -3" scale="1 1 1"></a-gltf-model>
+
+        <!-- Naturaleza desolada inicial -->
+        <a-gltf-model src="#arboles-muertos" position="-3 0 -5" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#fragmento-arboles" position="3 0 -5" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#arbustos" position="-1 0 -4" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#pasto-muerto" position="1 0 -4" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#pasto-seco" position="0 0 -2" scale="1 1 1"></a-gltf-model>
+
+        <!-- Rocas distribuidas -->
+        <a-gltf-model src="#roca-1" position="-2 0 -3" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#roca-2" position="2 0 -3" scale="1 1 1"></a-gltf-model>
+        <a-gltf-model src="#rocas" position="0 0 -6" scale="1 1 1"></a-gltf-model>
+
         <!-- Ejemplo de un "Recuerdo" flotante (Esfera brillante) -->
         <a-sphere position="0 2 -3" radius="0.4" color="#ffeaa7"
             material="emissive: #fdcb6e; emissiveIntensity: 0.6"></a-sphere>
