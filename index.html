@@ -14,9 +14,12 @@
         <a-light type="ambient" color="#95a5a6"></a-light>
         <a-light type="directional" position="2 4 -2" color="#dfe6e9" intensity="0.6"></a-light>
 
+        <a-assets>
+            <img id="cielo-contaminado" src="assets/images/cielo-contaminado.jpg">
+        </a-assets>
+
         <!-- Entorno: Cielo y suelo -->
-        <a-sky color="#636e72"></a-sky>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="50" height="50" color="#2d3436"></a-plane>
+        <a-sky src="#cielo-contaminado"></a-sky>
 
         <!-- IMPORTAR TU MODELO .GLB -->
         <!-- position: x y z | scale: tamaño (ancho alto profundidad) -->
