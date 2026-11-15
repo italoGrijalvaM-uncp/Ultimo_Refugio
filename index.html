@@ -16,8 +16,11 @@
 
         <a-assets>
             <img id="cielo-contaminado" src="assets/images/cielo_contaminado.jpg">
+            <audio id="musica-fondo" src="assets/audio/music3.mp3" preload="auto"></audio>
         </a-assets>
-
+        <a-sound id="reproductor-musica" src="#musica-fondo" autoplay="false" loop="true" volume="0.5"
+            positional="false">
+        </a-sound>
         <!-- Entorno: Cielo y suelo -->
         <a-sky src="#cielo-contaminado"></a-sky>
 
@@ -25,8 +28,7 @@
         <!-- position: x y z | scale: tamaño (ancho alto profundidad) -->
         <a-gltf-model src="assets/models/entorno_UR.glb" position="-0.346 1.796 -0.0069" scale="1 1 1">
         </a-gltf-model>
-        <a-gltf-model src="assets/models/winter_terrain_02.glb" position="-0.012 1.605 -1.965" scale="200 200 200">
-        </a-gltf-model>
+
 
         <!-- Rig del Jugador (Compatible con Meta Quest 3 y Celulares) -->
         <a-entity id="rig" position="0 0 0">
@@ -44,7 +46,77 @@
             <a-entity laser-controls="hand: right" raycaster="objects: .interactuable; far: 20"></a-entity>
 
         </a-entity>
+        <!-- Contenedores de los Ecorrecuerdos -->
+
+        <!-- Cristal exterior (Octaedro) - ecorrecuerdo cielo -->
+        <a-octahedron id="cristal-1" class="interactuable" radius="0.45" position="-3.996 6.656 -6.433"
+            scale="0.7 1.3 0.7"
+            material="color: #00cec9; opacity: 0.45; transparent: true; roughness: 0.1; metalness: 0.8"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+        </a-octahedron>
+
+        <!-- Esfera interna con la imagen -->
+        <a-sphere id="esfera-recuerdo-1" radius="0.22"
+            material="src: assets/images/ecorrecuerdo_cielo.png; side: double; shader: flat; repeat: -1 1"
+            position="-3.996 6.679 -6.433" scale="0.886 0.886 0.886"
+            animation="property: rotation; to: 0 -360 0; loop: true; dur: 12000; easing: linear">
+        </a-sphere>
+        <!-- Cristal exterior (Octaedro) - ecorrecuerdo arbol  -->
+        <a-octahedron id="cristal-2" class="interactuable" radius="0.45" position="5.418 1.997 1.169"
+            scale="0.7 1.3 0.7"
+            material="color: #00cec9; opacity: 0.45; transparent: true; roughness: 0.1; metalness: 0.8"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+        </a-octahedron>
+
+        <!-- Esfera interna con la imagen -->
+        <a-sphere id="esfera-recuerdo-2" radius="0.22"
+            material="src: assets/images/ecorrecuerdo_arbol.png; side: double; shader: flat; repeat: -1 1"
+            position="5.418 2.029 1.169" scale="0.886 0.886 0.886"
+            animation="property: rotation; to: 0 -360 0; loop: true; dur: 12000; easing: linear">
+        </a-sphere>
+        <!-- Cristal exterior (Octaedro) - ecorrecuerdo rio -->
+        <a-octahedron id="cristal-3" class="interactuable" radius="0.45" position="-1.765 1.968 4.446"
+            scale="0.7 1.3 0.7"
+            material="color: #00cec9; opacity: 0.45; transparent: true; roughness: 0.1; metalness: 0.8"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+        </a-octahedron>
+
+        <!-- Esfera interna con la imagen -->
+        <a-sphere id="esfera-recuerdo-3" radius="0.22"
+            material="src: assets/images/ecorrecuerdo_agua.avif; side: double; shader: flat; repeat: -1 1"
+            position="-1.765 1.973 4.446" scale="0.886 0.886 0.886"
+            animation="property: rotation; to: 0 -360 0; loop: true; dur: 12000; easing: linear">
+        </a-sphere>
+        <!-- Cristal exterior (Octaedro) - ecorrecuerdo animales -->
+        <a-octahedron id="cristal-4" class="interactuable" radius="0.45" position="4.755 1.992 -3.756"
+            scale="0.7 1.3 0.7"
+            material="color: #00cec9; opacity: 0.45; transparent: true; roughness: 0.1; metalness: 0.8"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+        </a-octahedron>
+
+        <!-- Esfera interna con la imagen -->
+        <a-sphere id="esfera-recuerdo-4" radius="0.22"
+            material="src: assets/images/ecorrecuerdo_animal.png; side: double; shader: flat; repeat: -1 1"
+            position="4.755 1.998 -3.756" scale="0.886 0.886 0.886"
+            animation="property: rotation; to: 0 -360 0; loop: true; dur: 12000; easing: linear">
+        </a-sphere>
     </a-scene>
+    <script>
+        const escena = document.querySelector('a-scene');
+        const musica = document.querySelector('#reproductor-musica');
+        let iniciada = false;
+
+        function iniciarMusica() {
+            if (!iniciada && musica.components.sound) {
+                musica.components.sound.playSound();
+                iniciada = true;
+            }
+        }
+
+        // Se activa al hacer clic en pantalla o al entrar a las gafas VR
+        window.addEventListener('click', iniciarMusica);
+        escena.addEventListener('enter-vr', iniciarMusica);
+    </script>
 </body>
 
 </html>
