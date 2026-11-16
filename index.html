@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Último Refugio - Realidad Virtual Web</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Librería para movimiento con joystick y colisiones de terreno -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
 </head>
 
 <body>
@@ -24,17 +26,19 @@
         <!-- Entorno: Cielo y suelo -->
         <a-sky src="#cielo-contaminado"></a-sky>
 
-        <!-- IMPORTAR TU MODELO .GLB -->
+        <!-- IMPORTAR MODELO .GLB -->
         <!-- position: x y z | scale: tamaño (ancho alto profundidad) -->
-        <a-gltf-model src="assets/models/entorno_UR.glb" position="-0.346 1.796 -0.0069" scale="1 1 1">
+        <a-gltf-model src="assets/models/Terreno_UR.glb" position="-0.217 1.796 21.871" scale="1 1 1" nav-mesh
+            class="suelo">
+        </a-gltf-model>
+        <a-gltf-model src="assets/models/Objetos_UR.glb" position="-0.346 1.796 -0.0069" scale="1 1 1">
         </a-gltf-model>
 
+        <!-- Rig del Jugador con soporte de movimiento (Meta Quest 3) -->
+        <a-entity id="rig" movement-controls="speed: 0.2; constrainToNavMesh: True; camera: #camera" position="0 0.2 0">
 
-        <!-- Rig del Jugador (Compatible con Meta Quest 3 y Celulares) -->
-        <a-entity id="rig" position="0 0 0">
-
-            <!-- Cámara con cursor de mirada (respaldo por si alguien entra desde celular) -->
-            <a-camera position="0 1.6 0">
+            <!-- Cámara -->
+            <a-camera id="camera" position="0 1.6 0">
                 <a-cursor color="#ff7675" fuse="true" fuse-timeout="1500"
                     raycaster="objects: .interactuable"></a-cursor>
             </a-camera>
@@ -46,6 +50,56 @@
             <a-entity laser-controls="hand: right" raycaster="objects: .interactuable; far: 20"></a-entity>
 
         </a-entity>
+        <!-- Hotspot 1: Zona del Río -->
+        <a-ring class="interactuable" hotspot="destino: 0.043 1.481 1.017" position="0.043 1.481 1.017"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 1.5: Zona del Río -->
+        <a-ring class="interactuable" hotspot="destino: 0.021 1.481 2.348" position="0.021 1.481 2.348"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 1.7: Zona del Río -->
+        <a-ring class="interactuable" hotspot="destino: 0.099 1.481 4.492" position="0.099 1.481 4.492"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 1.9: Zona del Río -->
+        <a-ring class="interactuable" hotspot="destino: -1.087 1.481 4.492" position="-1.087 1.481 4.492"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 2: Base o Cima de la Montaña (Cerca del ecorrecuerdo del cielo) -->
+        <a-ring class="interactuable" hotspot="destino: -1.055 1.481 0.001" position="-1.055 1.481 0.001"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 2.2: Base o Cima de la Montaña (Cerca del ecorrecuerdo del cielo) -->
+        <a-ring class="interactuable" hotspot="destino: -2.545 1.491 -0.569" position="-1.055 1.481 0.001"
+            scale="0.45 0.45 0.45" rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+        <!-- Hotspot 3: Zona del Árbol -->
+        <a-ring class="interactuable" hotspot="destino: -1.7 1.8 3.5" position="-1.7 1.85 3.5" scale="0.45 0.45 0.45"
+            rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+
+        <!-- Hotspot 4: zona de animales -->
+        <a-ring class="interactuable" hotspot="destino: -3.5 5.2 -5.5" position="-3.5 5.25 -5.5" sacle="0.45 0.45 0.45"
+            rotation="-90 0 0" radius-inner="0.25" radius-outer="0.4"
+            material="color: #00cec9; shader: flat; opacity: 0.8"
+            animation="property: scale; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1000">
+        </a-ring>
+
         <!-- Contenedores de los Ecorrecuerdos -->
 
         <!-- Cristal exterior (Octaedro) - ecorrecuerdo cielo -->
