@@ -24,7 +24,11 @@
                 this.superficies = [];
 
                 // Función unificada de salto
-                const ejecutarSalto = () => {
+                const ejecutarSalto = (e) => {
+                    if (e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
                     if (!this.enElAire) {
                         this.velocidadY = this.data.fuerzaSalto;
                         this.enElAire = true;
@@ -36,18 +40,17 @@
                     if (e.code === 'Space') ejecutarSalto();
                 });
 
-                // 2. Salto con botón táctil (Celular)
+                // 2. Salto con botón táctil (Celular - Usando pointerdown para máxima compatibilidad)
                 window.addEventListener('DOMContentLoaded', () => {
                     const btnMovil = document.querySelector('#btn-saltar-movil');
                     if (btnMovil) {
-                        btnMovil.addEventListener('touchstart', (e) => {
-                            e.preventDefault(); // Evita zoom o selección accidental al tocar rápido
-                            ejecutarSalto();
-                        }, { passive: false });
+                        // pointerdown responde al instante en iOS y Android sin retrasos
+                        btnMovil.addEventListener('pointerdown', ejecutarSalto, { passive: false });
+                        btnMovil.addEventListener('touchstart', ejecutarSalto, { passive: false });
                     }
                 });
 
-                // Guarda las mallas de la rampa y el terreno cuando carguen
+                // Guarda las mallas del terreno cuando carguen
                 this.el.sceneEl.addEventListener('loaded', () => {
                     document.querySelectorAll('.pisable').forEach(el => {
                         if (el.object3D) this.superficies.push(el.object3D);
@@ -197,34 +200,37 @@
 
 <body>
     <!-- Botón de salto para celulares / pantallas táctiles -->
-    <button id="btn-saltar-movil" aria-label="Saltar">↑ Saltar</button>
+    <button id="btn-saltar-movil" type="button">↑ Saltar</button>
 
     <style>
         #btn-saltar-movil {
             display: none;
             /* Oculto en PC por defecto */
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 9999;
-            padding: 14px 22px;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99999;
+            /* Asegura que esté por encima de todo el canvas de A-Frame */
+            padding: 16px 24px;
             font-family: sans-serif;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: #ffffff;
-            background: rgba(0, 206, 201, 0.75);
+            background: rgba(0, 206, 201, 0.85);
             border: 2px solid #81ecec;
             border-radius: 50px;
             backdrop-filter: blur(4px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             user-select: none;
             -webkit-user-select: none;
+            /* IMPORTANTE: Permite que el navegador táctil interprete el toque de inmediato */
             touch-action: manipulation;
+            pointer-events: auto;
         }
 
         #btn-saltar-movil:active {
-            transform: scale(0.94);
-            background: rgba(0, 206, 201, 0.95);
+            transform: scale(0.90);
+            background: rgba(0, 206, 201, 1);
         }
 
         /* Se muestra automáticamente en celulares y tablets */
