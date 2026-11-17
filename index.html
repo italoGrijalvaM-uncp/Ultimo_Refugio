@@ -139,6 +139,11 @@
                 this.envuelto = true;
                 this.lanzarDestello();
 
+                // NUEVO: Oculta temporalmente el escenario para que ningún arbusto atraviese la esfera
+                document.querySelectorAll('a-gltf-model').forEach(modelo => {
+                    modelo.setAttribute('visible', false);
+                });
+
                 const posCamara = new THREE.Vector3();
                 this.camaraEl.object3D.getWorldPosition(posCamara);
 
@@ -160,6 +165,11 @@
             desactivarEnvoltura: function () {
                 this.envuelto = false;
                 this.lanzarDestello();
+
+                // NUEVO: Vuelve a mostrar el terreno y los arbustos al salir del recuerdo
+                document.querySelectorAll('a-gltf-model').forEach(modelo => {
+                    modelo.setAttribute('visible', true);
+                });
 
                 this.esferaEl.removeAttribute('animation__escala');
                 this.esferaEl.setAttribute('animation__escala', {
@@ -244,9 +254,7 @@
         <a-gltf-model src="assets/models/TerrenoUR.glb" position="-0.346 4.971 -0.007" scale="1 1 1" class="pisable">
         </a-gltf-model>
 
-        <a-gltf-model src="assets/models/CaminoUR.glb" position="-0.346 4.971 -0.007" scale="1 1 1" class="pisable"
-            visible="false">
-        </a-gltf-model>
+
 
         <a-gltf-model src="assets/models/ObjetosUR.glb" position="-0.346 4.971 -0.007" scale="1 1 1">
         </a-gltf-model>
