@@ -23,11 +23,27 @@
                 this.origen = new THREE.Vector3();
                 this.superficies = [];
 
-                // Detecta la barra espaciadora para saltar
-                window.addEventListener('keydown', (e) => {
-                    if (e.code === 'Space' && !this.enElAire) {
+                // Función unificada de salto
+                const ejecutarSalto = () => {
+                    if (!this.enElAire) {
                         this.velocidadY = this.data.fuerzaSalto;
                         this.enElAire = true;
+                    }
+                };
+
+                // 1. Salto con teclado (Laptop/PC)
+                window.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space') ejecutarSalto();
+                });
+
+                // 2. Salto con botón táctil (Celular)
+                window.addEventListener('DOMContentLoaded', () => {
+                    const btnMovil = document.querySelector('#btn-saltar-movil');
+                    if (btnMovil) {
+                        btnMovil.addEventListener('touchstart', (e) => {
+                            e.preventDefault(); // Evita zoom o selección accidental al tocar rápido
+                            ejecutarSalto();
+                        }, { passive: false });
                     }
                 });
 
@@ -170,6 +186,44 @@
 </head>
 
 <body>
+    <!-- Botón de salto para celulares / pantallas táctiles -->
+    <button id="btn-saltar-movil" aria-label="Saltar">↑ Saltar</button>
+
+    <style>
+        #btn-saltar-movil {
+            display: none;
+            /* Oculto en PC por defecto */
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            padding: 14px 22px;
+            font-family: sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background: rgba(0, 206, 201, 0.75);
+            border: 2px solid #81ecec;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        #btn-saltar-movil:active {
+            transform: scale(0.94);
+            background: rgba(0, 206, 201, 0.95);
+        }
+
+        /* Se muestra automáticamente en celulares y tablets */
+        @media (pointer: coarse) {
+            #btn-saltar-movil {
+                display: block;
+            }
+        }
+    </style>
     <a-scene vr-mode-ui="enabled: true" loading-screen="dotsColor: #00cec9; backgroundColor: #111">
         <!-- Luces -->
         <a-light type="ambient" color="#95a5a6"></a-light>
@@ -274,18 +328,24 @@
 
     <script>
         const escena = document.querySelector('a-scene');
-        const musica = document.querySelector('#reproductor-musica');
+        // Reproductor estéreo nativo (cero espacialización 3D ni oscilación entre oídos)
+        const musicaFondo = new Audio('assets/audio/backgroundmusic.mp3');
+        musicaFondo.loop = true;
+        musicaFondo.volume = 0.5; // Ajusta entre 0.1 y 1.0 según qué tan fuerte quedó tu nuevo MP3
+
         let iniciada = false;
 
         function iniciarMusica() {
-            if (!iniciada && musica.components.sound) {
-                musica.components.sound.playSound();
-                iniciada = true;
+            if (!iniciada) {
+                musicaFondo.play()
+                    .then(() => { iniciada = true; })
+                    .catch(err => console.log("Esperando interacción del usuario para audio:", err));
             }
         }
 
         window.addEventListener('click', iniciarMusica);
-        escena.addEventListener('enter-vr', iniciarMusica);
+        window.addEventListener('keydown', iniciarMusica); // También arranca al presionar WASD
+        escena.addEventListener('enter-vr', iniciarMusica); w
     </script>
 </body>
 
